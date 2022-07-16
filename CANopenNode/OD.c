@@ -21,7 +21,6 @@
     OD data initialization of all groups
 *******************************************************************************/
 OD_ATTR_PERSIST_COMM OD_PERSIST_COMM_t OD_PERSIST_COMM = {
-    .x1000_deviceType = 0x00000000,
     .x1005_COB_ID_SYNCMessage = 0x00000080,
     .x1006_communicationCyclePeriod = 0x00000000,
     .x1007_synchronousWindowLength = 0x00000000,
@@ -39,20 +38,6 @@ OD_ATTR_PERSIST_COMM OD_PERSIST_COMM_t OD_PERSIST_COMM = {
         .serialNumber = 0x00000000
     },
     .x1019_synchronousCounterOverflowValue = 0x00,
-    .x1020_verifyConfiguration_sub0 = 0x02,
-    .x1020_verifyConfiguration = {0x00000000, 0x00000000},
-    .x1027_moduleList_sub0 = 0x01,
-    .x1027_moduleList = {0x0000},
-    .x1028_emergencyConsumerObject_sub0 = 0x08,
-    .x1028_emergencyConsumerObject = {0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000},
-    .x1029_errorBehaviorObject_sub0 = 0x02,
-    .x1029_errorBehaviorObject = {0x00, 0x00},
-    .x1201_SDOServerParameter = {
-        .highestSub_indexSupported = 0x03,
-        .COB_IDClientToServerRx = 0x80000000,
-        .COB_IDServerToClientTx = 0x80000000,
-        .node_IDOfTheSDOClient = 0x01
-    },
     .x1280_SDOClientParameter = {
         .highestSub_indexSupported = 0x03,
         .COB_IDClientToServerTx = 0x80000000,
@@ -207,23 +192,15 @@ OD_ATTR_PERSIST_COMM OD_PERSIST_COMM_t OD_PERSIST_COMM = {
 
 OD_ATTR_RAM OD_RAM_t OD_RAM = {
     .x1001_errorRegister = 0x00,
-    .x1002_manufacturerStatusRegister = 0x00000000,
     .x1010_storeParameters_sub0 = 0x04,
     .x1010_storeParameters = {0x00000001, 0x00000001, 0x00000001, 0x00000001},
     .x1011_restoreDefaultParameters_sub0 = 0x04,
     .x1011_restoreDefaultParameters = {0x00000001, 0x00000001, 0x00000001, 0x00000001},
-    .x1013_highResolutionTimeStamp = 0x00000000,
     .x1200_SDOServerParameter = {
         .highestSub_indexSupported = 0x02,
         .COB_IDClientToServerRx = 0x00000600,
         .COB_IDServerToClientTx = 0x00000580
-    },
-    .x1F81_slaveAssignment_sub0 = 0x7F,
-    .x1F82_requestNMT_sub0 = 0x7F,
-    .x2000_motorSensors_sub0 = 0x02,
-    .x2000_motorSensors = {0x00000000, 0x00000000},
-    .x3000_profiles_sub0 = 0x01,
-    .x3000_profiles = {0x00000000}
+    }
 };
 
 
@@ -234,30 +211,20 @@ OD_ATTR_RAM OD_RAM_t OD_RAM = {
 typedef struct {
     OD_obj_var_t o_1000_deviceType;
     OD_obj_var_t o_1001_errorRegister;
-    OD_obj_var_t o_1002_manufacturerStatusRegister;
     OD_obj_array_t o_1003_pre_definedErrorField;
     OD_obj_var_t o_1005_COB_ID_SYNCMessage;
     OD_obj_var_t o_1006_communicationCyclePeriod;
     OD_obj_var_t o_1007_synchronousWindowLength;
-    OD_obj_var_t o_1008_manufacturerDeviceName;
-    OD_obj_var_t o_1009_manufacturerHardwareVersion;
-    OD_obj_var_t o_100A_manufacturerSoftwareVersion;
     OD_obj_array_t o_1010_storeParameters;
     OD_obj_array_t o_1011_restoreDefaultParameters;
     OD_obj_var_t o_1012_COB_IDTimeStampObject;
-    OD_obj_var_t o_1013_highResolutionTimeStamp;
     OD_obj_var_t o_1014_COB_ID_EMCY;
     OD_obj_var_t o_1015_inhibitTimeEMCY;
     OD_obj_array_t o_1016_consumerHeartbeatTime;
     OD_obj_var_t o_1017_producerHeartbeatTime;
     OD_obj_record_t o_1018_identity[5];
     OD_obj_var_t o_1019_synchronousCounterOverflowValue;
-    OD_obj_array_t o_1020_verifyConfiguration;
-    OD_obj_array_t o_1027_moduleList;
-    OD_obj_array_t o_1028_emergencyConsumerObject;
-    OD_obj_array_t o_1029_errorBehaviorObject;
     OD_obj_record_t o_1200_SDOServerParameter[3];
-    OD_obj_record_t o_1201_SDOServerParameter[4];
     OD_obj_record_t o_1280_SDOClientParameter[4];
     OD_obj_record_t o_1400_RPDOCommunicationParameter[4];
     OD_obj_record_t o_1401_RPDOCommunicationParameter[4];
@@ -275,12 +242,6 @@ typedef struct {
     OD_obj_record_t o_1A01_TPDOMappingParameter[9];
     OD_obj_record_t o_1A02_TPDOMappingParameter[9];
     OD_obj_record_t o_1A03_TPDOMappingParameter[9];
-    OD_obj_var_t o_1F80_NMTStartup;
-    OD_obj_array_t o_1F81_slaveAssignment;
-    OD_obj_array_t o_1F82_requestNMT;
-    OD_obj_var_t o_1F89_bootTime;
-    OD_obj_array_t o_2000_motorSensors;
-    OD_obj_array_t o_3000_profiles;
 } ODObjs_t;
 
 static CO_PROGMEM ODObjs_t ODObjs = {
@@ -291,13 +252,8 @@ static CO_PROGMEM ODObjs_t ODObjs = {
     },
     .o_1001_errorRegister = {
         .dataOrig = &OD_RAM.x1001_errorRegister,
-        .attribute = ODA_SDO_R | ODA_TRPDO,
+        .attribute = ODA_SDO_R | ODA_TPDO,
         .dataLength = 1
-    },
-    .o_1002_manufacturerStatusRegister = {
-        .dataOrig = &OD_RAM.x1002_manufacturerStatusRegister,
-        .attribute = ODA_SDO_R | ODA_TRPDO | ODA_MB,
-        .dataLength = 4
     },
     .o_1003_pre_definedErrorField = {
         .dataOrig0 = NULL,
@@ -322,21 +278,6 @@ static CO_PROGMEM ODObjs_t ODObjs = {
         .attribute = ODA_SDO_RW | ODA_MB,
         .dataLength = 4
     },
-    .o_1008_manufacturerDeviceName = {
-        .dataOrig = NULL,
-        .attribute = ODA_SDO_R | ODA_STR,
-        .dataLength = 0
-    },
-    .o_1009_manufacturerHardwareVersion = {
-        .dataOrig = NULL,
-        .attribute = ODA_SDO_R | ODA_STR,
-        .dataLength = 0
-    },
-    .o_100A_manufacturerSoftwareVersion = {
-        .dataOrig = NULL,
-        .attribute = ODA_SDO_R | ODA_STR,
-        .dataLength = 0
-    },
     .o_1010_storeParameters = {
         .dataOrig0 = &OD_RAM.x1010_storeParameters_sub0,
         .dataOrig = &OD_RAM.x1010_storeParameters[0],
@@ -356,11 +297,6 @@ static CO_PROGMEM ODObjs_t ODObjs = {
     .o_1012_COB_IDTimeStampObject = {
         .dataOrig = &OD_PERSIST_COMM.x1012_COB_IDTimeStampObject,
         .attribute = ODA_SDO_RW | ODA_MB,
-        .dataLength = 4
-    },
-    .o_1013_highResolutionTimeStamp = {
-        .dataOrig = &OD_RAM.x1013_highResolutionTimeStamp,
-        .attribute = ODA_SDO_RW | ODA_TRPDO | ODA_MB,
         .dataLength = 4
     },
     .o_1014_COB_ID_EMCY = {
@@ -423,38 +359,6 @@ static CO_PROGMEM ODObjs_t ODObjs = {
         .attribute = ODA_SDO_RW,
         .dataLength = 1
     },
-    .o_1020_verifyConfiguration = {
-        .dataOrig0 = &OD_PERSIST_COMM.x1020_verifyConfiguration_sub0,
-        .dataOrig = &OD_PERSIST_COMM.x1020_verifyConfiguration[0],
-        .attribute0 = ODA_SDO_R,
-        .attribute = ODA_SDO_RW | ODA_MB,
-        .dataElementLength = 4,
-        .dataElementSizeof = sizeof(uint32_t)
-    },
-    .o_1027_moduleList = {
-        .dataOrig0 = &OD_PERSIST_COMM.x1027_moduleList_sub0,
-        .dataOrig = &OD_PERSIST_COMM.x1027_moduleList[0],
-        .attribute0 = ODA_SDO_R,
-        .attribute = ODA_SDO_R | ODA_MB,
-        .dataElementLength = 2,
-        .dataElementSizeof = sizeof(uint16_t)
-    },
-    .o_1028_emergencyConsumerObject = {
-        .dataOrig0 = &OD_PERSIST_COMM.x1028_emergencyConsumerObject_sub0,
-        .dataOrig = &OD_PERSIST_COMM.x1028_emergencyConsumerObject[0],
-        .attribute0 = ODA_SDO_R,
-        .attribute = ODA_SDO_RW | ODA_MB,
-        .dataElementLength = 4,
-        .dataElementSizeof = sizeof(uint32_t)
-    },
-    .o_1029_errorBehaviorObject = {
-        .dataOrig0 = &OD_PERSIST_COMM.x1029_errorBehaviorObject_sub0,
-        .dataOrig = &OD_PERSIST_COMM.x1029_errorBehaviorObject[0],
-        .attribute0 = ODA_SDO_R,
-        .attribute = ODA_SDO_RW,
-        .dataElementLength = 1,
-        .dataElementSizeof = sizeof(uint8_t)
-    },
     .o_1200_SDOServerParameter = {
         {
             .dataOrig = &OD_RAM.x1200_SDOServerParameter.highestSub_indexSupported,
@@ -473,32 +377,6 @@ static CO_PROGMEM ODObjs_t ODObjs = {
             .subIndex = 2,
             .attribute = ODA_SDO_R | ODA_TPDO | ODA_MB,
             .dataLength = 4
-        }
-    },
-    .o_1201_SDOServerParameter = {
-        {
-            .dataOrig = &OD_PERSIST_COMM.x1201_SDOServerParameter.highestSub_indexSupported,
-            .subIndex = 0,
-            .attribute = ODA_SDO_R,
-            .dataLength = 1
-        },
-        {
-            .dataOrig = &OD_PERSIST_COMM.x1201_SDOServerParameter.COB_IDClientToServerRx,
-            .subIndex = 1,
-            .attribute = ODA_SDO_RW | ODA_TRPDO | ODA_MB,
-            .dataLength = 4
-        },
-        {
-            .dataOrig = &OD_PERSIST_COMM.x1201_SDOServerParameter.COB_IDServerToClientTx,
-            .subIndex = 2,
-            .attribute = ODA_SDO_RW | ODA_TRPDO | ODA_MB,
-            .dataLength = 4
-        },
-        {
-            .dataOrig = &OD_PERSIST_COMM.x1201_SDOServerParameter.node_IDOfTheSDOClient,
-            .subIndex = 3,
-            .attribute = ODA_SDO_RW,
-            .dataLength = 1
         }
     },
     .o_1280_SDOClientParameter = {
@@ -1230,48 +1108,6 @@ static CO_PROGMEM ODObjs_t ODObjs = {
             .attribute = ODA_SDO_RW | ODA_MB,
             .dataLength = 4
         }
-    },
-    .o_1F80_NMTStartup = {
-        .dataOrig = NULL,
-        .attribute = ODA_SDO_RW | ODA_MB,
-        .dataLength = 4
-    },
-    .o_1F81_slaveAssignment = {
-        .dataOrig0 = &OD_RAM.x1F81_slaveAssignment_sub0,
-        .dataOrig = NULL,
-        .attribute0 = ODA_SDO_R,
-        .attribute = ODA_SDO_RW | ODA_MB,
-        .dataElementLength = 4,
-        .dataElementSizeof = sizeof(uint32_t)
-    },
-    .o_1F82_requestNMT = {
-        .dataOrig0 = &OD_RAM.x1F82_requestNMT_sub0,
-        .dataOrig = NULL,
-        .attribute0 = ODA_SDO_R,
-        .attribute = ODA_SDO_RW,
-        .dataElementLength = 1,
-        .dataElementSizeof = sizeof(uint8_t)
-    },
-    .o_1F89_bootTime = {
-        .dataOrig = NULL,
-        .attribute = ODA_SDO_RW | ODA_MB,
-        .dataLength = 4
-    },
-    .o_2000_motorSensors = {
-        .dataOrig0 = &OD_RAM.x2000_motorSensors_sub0,
-        .dataOrig = &OD_RAM.x2000_motorSensors[0],
-        .attribute0 = ODA_SDO_R,
-        .attribute = ODA_SDO_RW | ODA_MB,
-        .dataElementLength = 4,
-        .dataElementSizeof = sizeof(uint32_t)
-    },
-    .o_3000_profiles = {
-        .dataOrig0 = &OD_RAM.x3000_profiles_sub0,
-        .dataOrig = &OD_RAM.x3000_profiles[0],
-        .attribute0 = ODA_SDO_R,
-        .attribute = ODA_SDO_RW | ODA_MB,
-        .dataElementLength = 4,
-        .dataElementSizeof = sizeof(uint32_t)
     }
 };
 
@@ -1282,30 +1118,20 @@ static CO_PROGMEM ODObjs_t ODObjs = {
 static OD_ATTR_OD OD_entry_t ODList[] = {
     {0x1000, 0x01, ODT_VAR, &ODObjs.o_1000_deviceType, NULL},
     {0x1001, 0x01, ODT_VAR, &ODObjs.o_1001_errorRegister, NULL},
-    {0x1002, 0x01, ODT_VAR, &ODObjs.o_1002_manufacturerStatusRegister, NULL},
     {0x1003, 0x11, ODT_ARR, &ODObjs.o_1003_pre_definedErrorField, NULL},
     {0x1005, 0x01, ODT_VAR, &ODObjs.o_1005_COB_ID_SYNCMessage, NULL},
     {0x1006, 0x01, ODT_VAR, &ODObjs.o_1006_communicationCyclePeriod, NULL},
     {0x1007, 0x01, ODT_VAR, &ODObjs.o_1007_synchronousWindowLength, NULL},
-    {0x1008, 0x01, ODT_VAR, &ODObjs.o_1008_manufacturerDeviceName, NULL},
-    {0x1009, 0x01, ODT_VAR, &ODObjs.o_1009_manufacturerHardwareVersion, NULL},
-    {0x100A, 0x01, ODT_VAR, &ODObjs.o_100A_manufacturerSoftwareVersion, NULL},
     {0x1010, 0x05, ODT_ARR, &ODObjs.o_1010_storeParameters, NULL},
     {0x1011, 0x05, ODT_ARR, &ODObjs.o_1011_restoreDefaultParameters, NULL},
     {0x1012, 0x01, ODT_VAR, &ODObjs.o_1012_COB_IDTimeStampObject, NULL},
-    {0x1013, 0x01, ODT_VAR, &ODObjs.o_1013_highResolutionTimeStamp, NULL},
     {0x1014, 0x01, ODT_VAR, &ODObjs.o_1014_COB_ID_EMCY, NULL},
     {0x1015, 0x01, ODT_VAR, &ODObjs.o_1015_inhibitTimeEMCY, NULL},
     {0x1016, 0x09, ODT_ARR, &ODObjs.o_1016_consumerHeartbeatTime, NULL},
     {0x1017, 0x01, ODT_VAR, &ODObjs.o_1017_producerHeartbeatTime, NULL},
     {0x1018, 0x05, ODT_REC, &ODObjs.o_1018_identity, NULL},
     {0x1019, 0x01, ODT_VAR, &ODObjs.o_1019_synchronousCounterOverflowValue, NULL},
-    {0x1020, 0x03, ODT_ARR, &ODObjs.o_1020_verifyConfiguration, NULL},
-    {0x1027, 0x02, ODT_ARR, &ODObjs.o_1027_moduleList, NULL},
-    {0x1028, 0x09, ODT_ARR, &ODObjs.o_1028_emergencyConsumerObject, NULL},
-    {0x1029, 0x03, ODT_ARR, &ODObjs.o_1029_errorBehaviorObject, NULL},
     {0x1200, 0x03, ODT_REC, &ODObjs.o_1200_SDOServerParameter, NULL},
-    {0x1201, 0x04, ODT_REC, &ODObjs.o_1201_SDOServerParameter, NULL},
     {0x1280, 0x04, ODT_REC, &ODObjs.o_1280_SDOClientParameter, NULL},
     {0x1400, 0x04, ODT_REC, &ODObjs.o_1400_RPDOCommunicationParameter, NULL},
     {0x1401, 0x04, ODT_REC, &ODObjs.o_1401_RPDOCommunicationParameter, NULL},
@@ -1323,12 +1149,6 @@ static OD_ATTR_OD OD_entry_t ODList[] = {
     {0x1A01, 0x09, ODT_REC, &ODObjs.o_1A01_TPDOMappingParameter, NULL},
     {0x1A02, 0x09, ODT_REC, &ODObjs.o_1A02_TPDOMappingParameter, NULL},
     {0x1A03, 0x09, ODT_REC, &ODObjs.o_1A03_TPDOMappingParameter, NULL},
-    {0x1F80, 0x01, ODT_VAR, &ODObjs.o_1F80_NMTStartup, NULL},
-    {0x1F81, 0x80, ODT_ARR, &ODObjs.o_1F81_slaveAssignment, NULL},
-    {0x1F82, 0x80, ODT_ARR, &ODObjs.o_1F82_requestNMT, NULL},
-    {0x1F89, 0x01, ODT_VAR, &ODObjs.o_1F89_bootTime, NULL},
-    {0x2000, 0x03, ODT_ARR, &ODObjs.o_2000_motorSensors, NULL},
-    {0x3000, 0x02, ODT_ARR, &ODObjs.o_3000_profiles, NULL},
     {0x0000, 0x00, 0, NULL, NULL}
 };
 
